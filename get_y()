@@ -1,0 +1,58 @@
+#include <iostream>
+#include <cctype>
+#include <limits>
+int get_y ();
+int
+main ()
+{
+  int a;
+  a = get_y ();
+  std::cout << "From main: " << a;
+
+  return 0;
+}
+
+/////////////////////////////////////////////
+int
+get_y ()			//only accept int (any)
+{
+  int size = 5;
+  char yr[size];
+  bool is_size = false;
+  bool is_digit = false;
+  
+    do
+    {
+        std::cout << "\nPlease enter 4-digit year: \n";
+        std::cin.getline(yr, size, '\n');//input size validation
+            
+            if(std::cin.fail())
+            {
+                is_size = false;
+                std::cout << "Too long, try again\n";
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            } //end fail check
+            else
+            {
+                is_size = true;
+                for (int i = 0; i < (size - 1); i++)
+	            {
+	               if (!(isdigit (yr[i])))	//check if digit
+	               {
+	                   is_digit = false;
+	                   std::cout << "\nYear must only include digits...\n";
+	                   std::cin.clear();
+	                   std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+	               } //end digit check
+	               else
+	               {
+	                    is_digit = true;
+	               }
+	            }
+            }
+    }
+    while(!is_size || !is_digit);
+    return std::atoi (yr);		//convert char digit to int digit
+}
+
